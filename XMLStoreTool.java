@@ -1,10 +1,5 @@
 package com.practice.stan.ConvinientApp.tools;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,6 +15,11 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
+
 /**
  * Created by W519L on 2017/11/28.
  */
@@ -28,17 +28,17 @@ public class XMLStore {
     private static XMLStore mXmlStore = new XMLStore();
     private String mstrConfigPath;
 
-    public static XMLStore GetInstance(){
+    public static XMLStore GetInstance() {
         return mXmlStore;
     }
-    //设置保存位置
-    public void setSaveplace(String saveplace){
-        mstrConfigPath=saveplace;
+
+    // 设置保存位置
+    public void setSaveplace(String saveplace) {
+        mstrConfigPath = saveplace;
     }
 
-    //写如xml
-    public boolean writeXML(String strContent ,String strFileName)
-    {
+    // 写如xml
+    public boolean writeXML(String strContent, String strFileName) {
         File pathFile = new File(mstrConfigPath);
         if (mstrConfigPath.length() <= 0 || !pathFile.exists()) {
             return false;
@@ -54,7 +54,7 @@ public class XMLStore {
 
         Document doc = dbBuilder.newDocument();
 
-        //创建根元素“Custom”
+        // 创建根元素“Custom”
         org.w3c.dom.Element root = doc.createElement("Custom");
         doc.appendChild(root);
 
@@ -64,12 +64,13 @@ public class XMLStore {
         Text configValue = doc.createTextNode(String.format("%s", strContent));
         configNode.appendChild(configValue);
 
-        //将xml写成文件
+        // 将xml写成文件
         Transformer trans;
         try {
             trans = TransformerFactory.newInstance().newTransformer();
             trans.setOutputProperty("indent", "yes");
-            trans.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(mstrConfigPath + "/" + strFileName)));
+            trans.transform(new DOMSource(doc),
+                    new StreamResult(new FileOutputStream(mstrConfigPath + "/" + strFileName)));
 
             return true;
         } catch (TransformerConfigurationException e) {
@@ -84,9 +85,8 @@ public class XMLStore {
         return false;
     }
 
-    //读取xml
-    public String readXML(String strFileName)
-    {
+    // 读取xml
+    public String readXML(String strFileName) {
         File pathFile = new File(mstrConfigPath);
         if (!pathFile.exists()) {
             return "";
@@ -118,7 +118,7 @@ public class XMLStore {
 
         org.w3c.dom.Element root = doc.getDocumentElement();
 
-        //获取内容
+        // 获取内容
         NodeList configNodes = root.getElementsByTagName("Name");
         Text configValue = null;
         if (configNodes.getLength() == 1) {
@@ -127,5 +127,9 @@ public class XMLStore {
         }
 
         return strName;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("这是一个示例文件");
     }
 }
