@@ -1,4 +1,4 @@
-package com.practice.stan.ConvinientApp.tools;
+package com.stan.practice.tools;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,11 +24,11 @@ import org.xml.sax.SAXException;
  * Created by W519L on 2017/11/28.
  */
 
-public class XMLStore {
-    private static XMLStore mXmlStore = new XMLStore();
+public class XMLStoreTool {
+    private static XMLStoreTool mXmlStore = new XMLStoreTool();
     private String mstrConfigPath;
 
-    public static XMLStore GetInstance() {
+    public static XMLStoreTool GetInstance() {
         return mXmlStore;
     }
 
